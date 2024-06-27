@@ -16,10 +16,6 @@ Example of a line to run the program: python .\python_sort.py -s 'C:/Folder/Next
 
 '''
 
-def hello():
-    print('Hello')
-
-
 import argparse
 from pathlib import Path
 import shutil
@@ -144,8 +140,11 @@ def unpack_archive(directory: Path):
         try:
             messege_a = f"Archive {name} file unpacked successfully."
             print(f'in unpacked process: {name}')
-            shutil.unpack_archive(directory / name, directory)  
-            log_message('Unpacked', messege_a, directory)
+            new_folder = directory / name
+            new_folder_str = str(new_folder)
+            new_folder_str_without_extension = new_folder_str.rsplit('.', 1)[0]
+            shutil.unpack_archive(directory / name, new_folder_str_without_extension )  
+            log_message('Unpacked', messege_a, new_folder_str_without_extension)
         except:
             print(f'{name} Not Archive or broken')
             
@@ -171,28 +170,33 @@ def dell_empty(directory: Path):
                 log_message('Repor: folder doesn\'t exist or full', messege_not, directory)  
 
 
-while True:
+def main():
+    while True:
 
-    create_empty = input('Do you want to create empty folders if there are no files of the corresponding type in the sorted directory? Enter Y or N:')
+        create_empty = input('Do you want to create empty folders if there are no files of the corresponding type in the sorted directory? Enter Y or N:')
 
-    if create_empty.lower() == 'y':
-        print("yes")
+        if create_empty.lower() == 'y':
+            print("yes")
 
-        read_folder(DESTINATION) 
-        arhive_dir = DESTINATION / 'archives'
-        unpack_archive(arhive_dir)
-        dell_empty(DESTINATION)
-        create_new_folder(DESTINATION)
-        break
+            read_folder(DESTINATION) 
+            arhive_dir = DESTINATION / 'archives'
+            unpack_archive(arhive_dir)
+            dell_empty(DESTINATION)
+            create_new_folder(DESTINATION)
+            break
 
-    elif create_empty.lower() == 'n':
-        print("no")
+        elif create_empty.lower() == 'n':
+            print("no")
 
-        read_folder(DESTINATION) 
-        arhive_dir = DESTINATION / 'archives'
-        unpack_archive(arhive_dir)
-        dell_empty(DESTINATION)
-        break
+            read_folder(DESTINATION) 
+            arhive_dir = DESTINATION / 'archives'
+            unpack_archive(arhive_dir)
+            dell_empty(DESTINATION)
+            break
 
-    else:
-        print("wrong input")
+        else:
+            print("wrong input")
+
+
+if __name__ == "__main__":
+    main()

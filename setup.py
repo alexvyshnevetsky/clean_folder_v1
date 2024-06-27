@@ -14,9 +14,5 @@ setup(
     "Operating System :: OS Independent",
     ],
     packages=find_namespace_packages(),
-    entry_points={'console_scripts': ['sort_folder = clean_folder.clean:hello']}
+    entry_points={'console_scripts': ['sort_folder = clean_folder.clean:main']}
 )
-
-
-
-
